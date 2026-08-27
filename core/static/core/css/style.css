@@ -370,3 +370,74 @@ body {
 
     line-height: 1.6;
 }
+/* ================= CTA SECTION ================= */
+
+.cta-section {
+    padding: 90px 0;
+
+    background-color: #212529;
+
+    color: white;
+}
+
+
+.cta-content {
+    max-width: 750px;
+
+    margin: auto;
+}
+
+
+.cta-small-text {
+    color: #ffc107;
+
+    font-weight: 700;
+
+    letter-spacing: 1px;
+
+    font-size: 0.9rem;
+}
+
+
+.cta-content h2 {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+
+    font-weight: 800;
+
+    margin-top: 15px;
+
+    margin-bottom: 20px;
+
+    line-height: 1.2;
+}
+
+
+.cta-content p {
+    color: #adb5bd;
+
+    font-size: 1.15rem;
+
+    line-height: 1.7;
+
+    margin-bottom: 30px;
+}
+
+
+.cta-buttons {
+    display: flex;
+
+    justify-content: center;
+
+    gap: 15px;
+
+    flex-wrap: wrap;
+}
+
+
+@media (max-width: 576px) {
+
+    .cta-section {
+        padding: 70px 0;
+    }
+
+}
