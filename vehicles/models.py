@@ -22,5 +22,6 @@ class Vehicle(models.Model):
      seates=models.PositiveIntegerField(default=2)
      is_available=models.BooleanField(default=True)
      created_at=models.DateTimeField(auto_now_add=True)
+     image = models.ImageField(upload_to="vehicles/", blank=True, null=True)
      def __str__(self):
         return f"{self.brand} {self.name}"

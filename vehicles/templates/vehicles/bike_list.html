@@ -4,11 +4,14 @@
 Explore Bikes | BikeRental
 {% endblock %}
 
+
 {% block content %}
 
 <section class="py-5">
 
     <div class="container">
+
+        <!-- Page Heading -->
 
         <div class="text-center mb-5">
 
@@ -27,15 +30,65 @@ Explore Bikes | BikeRental
         </div>
 
 
-        <div class="row">
+        <!-- Bikes List -->
 
-            <div class="col-12 text-center">
+        <div class="row g-4">
 
-                <p class="text-muted">
-                    Bikes will appear here soon.
-                </p>
+            {% for vehicle in vehicles %}
 
-            </div>
+                <div class="col-lg-4 col-md-6">
+
+                    <div class="card h-100">
+
+                        <div class="card-body">
+
+                            <!-- Bike Name -->
+
+                            <h4 class="fw-bold">
+                                {{ vehicle.brand }} {{ vehicle.name }}
+                            </h4>
+
+
+                            <!-- Vehicle Type -->
+
+                            <p class="text-muted mb-2">
+                                {{ vehicle.get_vehicle_type_display }}
+                            </p>
+
+
+                            <!-- Transmission -->
+
+                            <p class="text-muted mb-2">
+                                {{ vehicle.get_transmission_display }}
+                            </p>
+
+
+                            <!-- Price -->
+
+                            <p class="mb-2">
+
+                                <strong>
+                                    ₹{{ vehicle.price_per_day }}
+                                </strong>
+
+                                / day
+
+                            </p>
+
+
+                            <!-- Seats -->
+
+                            <p class="text-muted mb-0">
+                                {{ vehicle.seats }} Seats
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            {% endfor %}
 
         </div>
 
