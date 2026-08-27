@@ -1,4 +1,5 @@
 {% extends 'core/base.html' %}
+{% load static %}
 
 {% block title %}
 Home | BikeRental
@@ -255,23 +256,25 @@ Home | BikeRental
 
         <div class="row g-4">
 
-
-            <!-- Bike 1 -->
+            <!-- ================= BIKE 1 ================= -->
 
             <div class="col-lg-4 col-md-6">
 
                 <div class="bike-card">
 
-                    <!-- Temporary Image Area -->
+                    <!-- Bike Image -->
 
                     <div class="bike-image">
 
-                        <div class="bike-image-placeholder">
-                            Bike Image
-                        </div>
+                        <img
+                            src="{% static 'core/images/honda activa.jpg' %}"
+                            alt="Honda Activa"
+                        >
 
                     </div>
 
+
+                    <!-- Bike Details -->
 
                     <div class="bike-card-body">
 
@@ -326,9 +329,7 @@ Home | BikeRental
 
 
                             <a href="#" class="btn btn-dark">
-
                                 View Details
-
                             </a>
 
                         </div>
@@ -340,20 +341,25 @@ Home | BikeRental
             </div>
 
 
-            <!-- Bike 2 -->
+            <!-- ================= BIKE 2 ================= -->
 
             <div class="col-lg-4 col-md-6">
 
                 <div class="bike-card">
 
+                    <!-- Bike Image -->
+
                     <div class="bike-image">
 
-                        <div class="bike-image-placeholder">
-                            Bike Image
-                        </div>
+                        <img
+                            src="{% static 'core/images/tvs jupitar.jpg' %}"
+                            alt="TVS Jupiter"
+                        >
 
                     </div>
 
+
+                    <!-- Bike Details -->
 
                     <div class="bike-card-body">
 
@@ -408,9 +414,7 @@ Home | BikeRental
 
 
                             <a href="#" class="btn btn-dark">
-
                                 View Details
-
                             </a>
 
                         </div>
@@ -422,20 +426,25 @@ Home | BikeRental
             </div>
 
 
-            <!-- Bike 3 -->
+            <!-- ================= BIKE 3 ================= -->
 
             <div class="col-lg-4 col-md-6">
 
                 <div class="bike-card">
 
+                    <!-- Bike Image -->
+
                     <div class="bike-image">
 
-                        <div class="bike-image-placeholder">
-                            Bike Image
-                        </div>
+                        <img
+                            src="{% static 'core/images/bajaj pulsar.jpg' %}"
+                            alt="Bajaj Pulsar"
+                        >
 
                     </div>
 
+
+                    <!-- Bike Details -->
 
                     <div class="bike-card-body">
 
@@ -490,9 +499,7 @@ Home | BikeRental
 
 
                             <a href="#" class="btn btn-dark">
-
                                 View Details
-
                             </a>
 
                         </div>
@@ -503,11 +510,10 @@ Home | BikeRental
 
             </div>
 
-
         </div>
 
 
-        <!-- Explore All -->
+        <!-- ================= EXPLORE ALL ================= -->
 
         <div class="text-center mt-5">
 
