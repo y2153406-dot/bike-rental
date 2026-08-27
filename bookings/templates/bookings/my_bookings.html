@@ -108,7 +108,7 @@ My Bookings | BikeRental
 
                             <!-- Total Price -->
 
-                            <p class="mb-0">
+                            <p class="mb-3">
 
                                 <strong>
                                     Total Price:
@@ -117,6 +117,29 @@ My Bookings | BikeRental
                                 ₹{{ booking.total_price }}
 
                             </p>
+
+
+                            <!-- Cancel Booking Button -->
+
+                            {% if booking.status == "PENDING" or booking.status == "CONFIRMED" %}
+
+                                <form
+                                    method="POST"
+                                    action="{% url 'cancel_booking' booking.id %}"
+                                >
+
+                                    {% csrf_token %}
+
+                                    <button
+                                        type="submit"
+                                        class="btn btn-danger"
+                                    >
+                                        Cancel Booking
+                                    </button>
+
+                                </form>
+
+                            {% endif %}
 
 
                         </div>

@@ -167,3 +167,40 @@ def my_bookings(request):
         "bookings/my_bookings.html",
         context
     )
+
+@login_required
+def cancel_booking(request, booking_id):
+
+    booking = get_object_or_404(
+        Booking,
+        id=booking_id,
+        user=request.user
+    )
+
+
+    if booking.status == "CANCELLED":
+
+        messages.error(
+            request,
+            "This booking is already cancelled."
+        )
+
+        return redirect(
+            "my_bookings"
+        )
+
+
+    booking.status = "CANCELLED"
+
+    booking.save()
+
+
+    messages.success(
+        request,
+        "Booking cancelled successfully."
+    )
+
+
+    return redirect(
+        "my_bookings"
+    )
