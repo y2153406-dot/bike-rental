@@ -1,0 +1,262 @@
+{% extends "core/base.html" %}
+
+
+{% block title %}
+Payment | BikeRental
+{% endblock %}
+
+
+{% block content %}
+
+<section class="py-5">
+
+    <div class="container">
+
+        <div class="row justify-content-center">
+
+            <div class="col-lg-6 col-md-8">
+
+
+                <!-- Payment Card -->
+
+                <div class="card shadow-sm">
+
+                    <div class="card-body p-4 p-md-5">
+
+
+                        <!-- Heading -->
+
+                        <div class="text-center mb-4">
+
+                            <h1 class="fw-bold">
+                                Complete Your Payment
+                            </h1>
+
+                            <p class="text-muted">
+                                Confirm your booking by completing the payment.
+                            </p>
+
+                        </div>
+
+
+                        <!-- Booking Details -->
+
+                        <div class="border rounded p-3 mb-4">
+
+                            <h5 class="fw-bold mb-3">
+
+                                {{ booking.vehicle.brand }}
+                                {{ booking.vehicle.name }}
+
+                            </h5>
+
+
+                            <p class="mb-2">
+
+                                <strong>
+                                    Pickup Date:
+                                </strong>
+
+                                {{ booking.pickup_date }}
+
+                            </p>
+
+
+                            <p class="mb-3">
+
+                                <strong>
+                                    Return Date:
+                                </strong>
+
+                                {{ booking.return_date }}
+
+                            </p>
+
+
+                            <!-- Total Price -->
+
+                            <div class="bg-light rounded p-3">
+
+                                <div class="d-flex justify-content-between align-items-center">
+
+                                    <strong>
+                                        Total Amount
+                                    </strong>
+
+                                    <span class="fs-4 fw-bold text-success">
+
+                                        ₹{{ booking.total_price }}
+
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- Payment Button -->
+
+                        <button
+                            id="razorpay-button"
+                            class="btn btn-warning w-100"
+                        >
+
+                            Pay ₹{{ booking.total_price }}
+
+                        </button>
+
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- Razorpay Checkout -->
+
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+
+<script>
+
+    var options = {
+
+        "key": "{{ razorpay_key_id }}",
+
+        "amount": "{{ booking.total_price|floatformat:0 }}00",
+
+        "currency": "INR",
+
+        "name": "BikeRental",
+
+        "description": "Bike Booking Payment",
+
+        "order_id": "{{ booking.razorpay_order_id }}",
+
+
+        "handler": function (response) {
+
+
+            fetch(
+                "{% url 'verify_payment' %}",
+                {
+
+                    method: "POST",
+
+
+                    headers: {
+
+                        "Content-Type":
+                            "application/x-www-form-urlencoded",
+
+                        "X-CSRFToken":
+                            "{{ csrf_token }}"
+
+                    },
+
+
+                    body: new URLSearchParams({
+
+                        razorpay_payment_id:
+                            response.razorpay_payment_id,
+
+                        razorpay_order_id:
+                            response.razorpay_order_id,
+
+                        razorpay_signature:
+                            response.razorpay_signature
+
+                    })
+
+                }
+
+            )
+
+
+            .then(
+
+                response => response.json()
+
+            )
+
+
+            .then(
+
+                data => {
+
+                    if (data.success) {
+
+
+                        window.location.href =
+
+                            "/bookings/success/" +
+
+                            data.booking_id + "/";
+
+
+                    }
+
+                    else {
+
+                        alert(
+
+                            data.message ||
+
+                            "Payment verification failed."
+
+                        );
+
+                    }
+
+                }
+
+            )
+
+
+            .catch(
+
+                error => {
+
+                    console.error(error);
+
+                    alert(
+
+                        "Something went wrong while verifying payment."
+
+                    );
+
+                }
+
+            );
+
+        }
+
+    };
+
+
+    var razorpay = new Razorpay(options);
+
+
+    document
+        .getElementById("razorpay-button")
+        .onclick = function (event) {
+
+            razorpay.open();
+
+            event.preventDefault();
+
+        };
+
+</script>
+
+
+{% endblock %}

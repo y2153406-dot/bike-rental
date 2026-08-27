@@ -37,6 +37,16 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+     # Django Allauth
+
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
+
+
+    # Your Apps
+
     'core',
     'vehicles',
     'bookings',
@@ -51,6 +61,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'allauth.account.middleware.AccountMiddleware',
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -122,6 +133,15 @@ STATIC_URL = 'static/'
 MEDIA_URL = "/media/"
 
 MEDIA_ROOT = BASE_DIR / "media"
+SITE_ID = 1
+LOGIN_URL = "login"
+
+LOGIN_REDIRECT_URL = "home"
+
+LOGOUT_REDIRECT_URL = "home"
+
+SOCIALACCOUNT_LOGIN_ON_GET = True
+
 
 
 # Email
@@ -132,3 +152,15 @@ MAILERS = {
         'BACKEND': 'django.core.mail.backends.console.EmailBackend',
     },
 }
+
+AUTHENTICATION_BACKENDS = [
+
+    'django.contrib.auth.backends.ModelBackend',
+
+    'allauth.account.auth_backends.AuthenticationBackend',
+
+]
+
+RAZORPAY_KEY_ID = "rzp_test_TUxUmcav8Plhi9"
+
+RAZORPAY_KEY_SECRET = "J5HoHtOY4UmayuSn6FoR4r71"

@@ -5,7 +5,10 @@ from vehicles.models import Vehicle
 from .models import Booking
 from datetime import datetime
 from django.views.decorators.http import require_POST
-
+import razorpay
+from django.conf import settings
+from django.views.decorators.csrf import csrf_exempt
+from django.http import JsonResponse
 
 @login_required
 def create_booking(request, vehicle_id):
@@ -97,7 +100,8 @@ def create_booking(request, vehicle_id):
         )
 
 
-                # Create booking
+        # Create booking
+
         booking = Booking.objects.create(
 
             user=request.user,
@@ -112,13 +116,49 @@ def create_booking(request, vehicle_id):
 
         )
 
-        return redirect(
-            "booking_success",
-            booking_id=booking.id
+
+        # Create Razorpay client
+
+        client = razorpay.Client(
+
+            auth=(
+
+                settings.RAZORPAY_KEY_ID,
+
+                settings.RAZORPAY_KEY_SECRET
+
+            )
+
         )
 
 
-        return redirect("booking_success")
+        # Create Razorpay order
+
+        razorpay_order = client.order.create({
+
+            "amount": int(total_price * 100),
+
+            "currency": "INR",
+
+        })
+
+
+        # Save Razorpay order ID
+
+        booking.razorpay_order_id = razorpay_order["id"]
+
+        booking.save()
+
+
+        # Redirect to payment page
+
+        return redirect(
+
+            "payment_page",
+
+            booking_id=booking.id
+
+        )
 
 
     context = {
@@ -129,10 +169,154 @@ def create_booking(request, vehicle_id):
 
 
     return render(
+
         request,
+
         "bookings/create_booking.html",
+
         context
+
     )
+
+@login_required
+def payment_page(request, booking_id):
+
+    booking = get_object_or_404(
+
+        Booking,
+
+        id=booking_id,
+
+        user=request.user
+
+    )
+
+
+    context = {
+
+        "booking": booking,
+
+        "razorpay_key_id": settings.RAZORPAY_KEY_ID
+
+    }
+
+
+    return render(
+
+        request,
+
+        "bookings/payment.html",
+
+        context
+
+    )
+
+@login_required
+def verify_payment(request):
+
+    if request.method != "POST":
+
+        return JsonResponse(
+            {
+                "success": False,
+                "message": "Invalid request method."
+            },
+            status=405
+        )
+
+
+    razorpay_payment_id = request.POST.get(
+        "razorpay_payment_id"
+    )
+
+    razorpay_order_id = request.POST.get(
+        "razorpay_order_id"
+    )
+
+    razorpay_signature = request.POST.get(
+        "razorpay_signature"
+    )
+
+
+    try:
+
+        booking = Booking.objects.get(
+
+            razorpay_order_id=razorpay_order_id,
+
+            user=request.user
+
+        )
+
+
+        client = razorpay.Client(
+
+            auth=(
+
+                settings.RAZORPAY_KEY_ID,
+
+                settings.RAZORPAY_KEY_SECRET
+
+            )
+
+        )
+
+
+        client.utility.verify_payment_signature({
+
+            "razorpay_order_id": razorpay_order_id,
+
+            "razorpay_payment_id": razorpay_payment_id,
+
+            "razorpay_signature": razorpay_signature
+
+        })
+
+
+        # Save successful payment details
+
+        booking.razorpay_payment_id = razorpay_payment_id
+
+        booking.razorpay_signature = razorpay_signature
+
+        booking.payment_status = "SUCCESS"
+
+        booking.status = "CONFIRMED"
+
+        booking.save()
+
+
+        return JsonResponse(
+            {
+                "success": True,
+
+                "booking_id": booking.id
+            }
+        )
+
+
+    except Booking.DoesNotExist:
+
+        return JsonResponse(
+            {
+                "success": False,
+
+                "message": "Booking not found."
+            },
+            status=404
+        )
+
+
+    except razorpay.errors.SignatureVerificationError:
+
+        return JsonResponse(
+            {
+                "success": False,
+
+                "message": "Payment verification failed."
+            },
+            status=400
+        )
 
 
 @login_required

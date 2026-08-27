@@ -1,5 +1,7 @@
 {% extends "core/base.html" %}
 
+{% load socialaccount %}
+
 
 {% block title %}
 Register | BikeRental
@@ -182,6 +184,31 @@ Register | BikeRental
 
 
                         </form>
+
+
+                        <!-- Divider -->
+
+                        <div class="d-flex align-items-center my-4">
+
+                            <hr class="flex-grow-1">
+
+                            <span class="mx-3 text-muted">
+                                OR
+                            </span>
+
+                            <hr class="flex-grow-1">
+
+                        </div>
+
+
+                        <!-- Google Register -->
+
+                        <a
+                            href="{% provider_login_url 'google' %}"
+                            class="btn btn-outline-dark w-100"
+                        >
+                            Continue with Google
+                        </a>
 
 
                         <!-- Login Link -->
