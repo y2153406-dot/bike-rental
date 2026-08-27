@@ -75,6 +75,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+     "django.contrib.sites", 
 
 
     # Django Allauth
@@ -316,27 +317,7 @@ AUTHENTICATION_BACKENDS = [
 ACCOUNT_DEFAULT_HTTP_PROTOCOL = "https"
 
 
-SOCIALACCOUNT_PROVIDERS = {
 
-    "google": {
-
-        "APP": {
-
-            "client_id": os.environ.get(
-                "GOOGLE_CLIENT_ID"
-            ),
-
-            "secret": os.environ.get(
-                "GOOGLE_CLIENT_SECRET"
-            ),
-
-            "key": "",
-
-        },
-
-    },
-
-}
 
 
 # --------------------------------------------------
