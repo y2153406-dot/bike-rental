@@ -1,0 +1,127 @@
+{% extends "core/base.html" %}
+
+
+{% block title %}
+Book {{ vehicle.brand }} {{ vehicle.name }} | BikeRental
+{% endblock %}
+
+
+{% block content %}
+
+<section class="py-5">
+
+    <div class="container">
+
+        <div class="row justify-content-center">
+
+            <div class="col-lg-6">
+
+
+                <!-- Page Heading -->
+
+                <div class="text-center mb-4">
+
+                    <h1 class="fw-bold">
+                        Book Your Bike
+                    </h1>
+
+                    <p class="text-muted">
+                        Complete the details below to book your ride.
+                    </p>
+
+                </div>
+
+
+                <!-- Selected Bike -->
+
+                <div class="card mb-4">
+
+                    <div class="card-body">
+
+                        <h4 class="fw-bold mb-1">
+
+                            {{ vehicle.brand }} {{ vehicle.name }}
+
+                        </h4>
+
+                        <p class="text-muted mb-0">
+
+                            ₹{{ vehicle.price_per_day }} / day
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Booking Form -->
+
+                <form method="POST">
+
+                    {% csrf_token %}
+
+
+                    <!-- Pickup Date -->
+
+                    <div class="mb-3">
+
+                        <label class="form-label">
+
+                            Pickup Date
+
+                        </label>
+
+                        <input
+                            type="date"
+                            name="pickup_date"
+                            class="form-control"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- Return Date -->
+
+                    <div class="mb-4">
+
+                        <label class="form-label">
+
+                            Return Date
+
+                        </label>
+
+                        <input
+                            type="date"
+                            name="return_date"
+                            class="form-control"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- Submit Button -->
+
+                    <button
+                        type="submit"
+                        class="btn btn-warning w-100"
+                    >
+
+                        Continue Booking →
+
+                    </button>
+
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}
