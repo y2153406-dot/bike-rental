@@ -101,7 +101,36 @@ My Bookings | BikeRental
                                     Status:
                                 </strong>
 
-                                {{ booking.get_status_display }}
+
+                                {% if booking.status == "PENDING" %}
+
+                                    <span class="badge text-bg-warning">
+                                        Pending
+                                    </span>
+
+
+                                {% elif booking.status == "CONFIRMED" %}
+
+                                    <span class="badge text-bg-success">
+                                        Confirmed
+                                    </span>
+
+
+                                {% elif booking.status == "CANCELLED" %}
+
+                                    <span class="badge text-bg-danger">
+                                        Cancelled
+                                    </span>
+
+
+                                {% elif booking.status == "COMPLETED" %}
+
+                                    <span class="badge text-bg-primary">
+                                        Completed
+                                    </span>
+
+
+                                {% endif %}
 
                             </p>
 

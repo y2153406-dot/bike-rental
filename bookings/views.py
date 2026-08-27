@@ -4,6 +4,7 @@ from django.contrib import messages
 from vehicles.models import Vehicle
 from .models import Booking
 from datetime import datetime
+from django.views.decorators.http import require_POST
 
 
 @login_required
@@ -59,6 +60,10 @@ def create_booking(request, vehicle_id):
             pickup_date__lt=return_date_object,
 
             return_date__gt=pickup_date_object
+
+        ).exclude(
+
+            status="CANCELLED"
 
         ).exists()
 
@@ -169,6 +174,7 @@ def my_bookings(request):
     )
 
 @login_required
+@require_POST
 def cancel_booking(request, booking_id):
 
     booking = get_object_or_404(
