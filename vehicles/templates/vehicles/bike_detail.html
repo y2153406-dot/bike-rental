@@ -1,0 +1,109 @@
+{% extends "core/base.html" %}
+
+
+{% block title %}
+{{ vehicle.brand }} {{ vehicle.name }} | BikeRental
+{% endblock %}
+
+
+{% block content %}
+
+<section class="py-5">
+
+    <div class="container">
+
+        <div class="row g-5 align-items-center">
+
+
+            <!-- Bike Image -->
+
+            <div class="col-lg-6">
+
+                {% if vehicle.image %}
+
+                    <img
+                        src="{{ vehicle.image.url }}"
+                        alt="{{ vehicle.brand }} {{ vehicle.name }}"
+                        class="img-fluid rounded"
+                    >
+
+                {% endif %}
+
+            </div>
+
+
+            <!-- Bike Details -->
+
+            <div class="col-lg-6">
+
+
+                <!-- Bike Name -->
+
+                <h1 class="fw-bold mb-2">
+
+                    {{ vehicle.brand }} {{ vehicle.name }}
+
+                </h1>
+
+
+                <!-- Vehicle Type -->
+
+                <p class="text-muted fs-5 mb-4">
+
+                    {{ vehicle.get_vehicle_type_display }}
+
+                </p>
+
+
+                <!-- Transmission and Seats -->
+
+                <div class="d-flex gap-4 text-muted mb-4">
+
+                    <span>
+                        ⚙️ {{ vehicle.get_transmission_display }}
+                    </span>
+
+                    <span>
+                        👥 {{ vehicle.seats }} Seats
+                    </span>
+
+                </div>
+
+
+                <hr>
+
+
+                <!-- Price -->
+
+                <div class="mt-4">
+
+                    <span class="fs-3 fw-bold">
+                        ₹{{ vehicle.price_per_day }}
+                    </span>
+
+                    <span class="text-muted">
+                        / day
+                    </span>
+
+                </div>
+
+                <div class="mt-4">
+
+    <a href="#" class="btn btn-warning btn-lg px-4">
+
+        Book This Bike →
+
+    </a>
+
+</div>
+
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}
