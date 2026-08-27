@@ -1,0 +1,150 @@
+{% extends "core/base.html" %}
+
+
+{% block title %}
+My Bookings | BikeRental
+{% endblock %}
+
+
+{% block content %}
+
+<section class="py-5">
+
+    <div class="container">
+
+
+        <!-- Page Heading -->
+
+        <div class="text-center mb-5">
+
+            <h1 class="fw-bold">
+                My Bookings
+            </h1>
+
+            <p class="text-muted">
+                View and manage your bike bookings.
+            </p>
+
+        </div>
+
+
+        <!-- Bookings List -->
+
+        <div class="row g-4">
+
+
+            {% for booking in bookings %}
+
+
+                <div class="col-lg-6">
+
+                    <div class="card h-100">
+
+                        <div class="card-body p-4">
+
+
+                            <!-- Bike Name -->
+
+                            <h4 class="fw-bold">
+
+                                {{ booking.vehicle.brand }}
+                                {{ booking.vehicle.name }}
+
+                            </h4>
+
+
+                            <!-- Pickup Date -->
+
+                            <p class="mb-2">
+
+                                <strong>
+                                    Pickup Date:
+                                </strong>
+
+                                {{ booking.pickup_date }}
+
+                            </p>
+
+
+                            <!-- Return Date -->
+
+                            <p class="mb-2">
+
+                                <strong>
+                                    Return Date:
+                                </strong>
+
+                                {{ booking.return_date }}
+
+                            </p>
+
+
+                            <!-- Status -->
+
+                            <p class="mb-2">
+
+                                <strong>
+                                    Status:
+                                </strong>
+
+                                {{ booking.get_status_display }}
+
+                            </p>
+
+
+                            <!-- Total Price -->
+
+                            <p class="mb-0">
+
+                                <strong>
+                                    Total Price:
+                                </strong>
+
+                                ₹{{ booking.total_price }}
+
+                            </p>
+
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+            {% empty %}
+
+
+                <!-- No Bookings -->
+
+                <div class="col-12 text-center">
+
+                    <p class="text-muted">
+
+                        You have no bookings yet.
+
+                    </p>
+
+
+                    <a
+                        href="{% url 'bike_list' %}"
+                        class="btn btn-dark mt-2"
+                    >
+
+                        Explore Bikes
+
+                    </a>
+
+                </div>
+
+
+            {% endfor %}
+
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

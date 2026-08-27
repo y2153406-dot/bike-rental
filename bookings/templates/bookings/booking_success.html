@@ -20,46 +20,83 @@ Booking Successful | BikeRental
 
                     <div class="card-body p-5">
 
-
-                        <!-- Success Icon -->
-
                         <div class="fs-1 mb-3">
-
                             ✅
+                        </div>
+
+
+                        <h1 class="fw-bold mb-3">
+                            Booking Successful!
+                        </h1>
+
+
+                        <p class="text-muted mb-4">
+                            Your bike has been booked successfully.
+                        </p>
+
+
+                        <hr>
+
+
+                        <!-- Booking Details -->
+
+                        <div class="text-start">
+
+                            <p>
+
+                                <strong>
+                                    Bike:
+                                </strong>
+
+                                {{ booking.vehicle.brand }}
+                                {{ booking.vehicle.name }}
+
+                            </p>
+
+
+                            <p>
+
+                                <strong>
+                                    Pickup Date:
+                                </strong>
+
+                                {{ booking.pickup_date }}
+
+                            </p>
+
+
+                            <p>
+
+                                <strong>
+                                    Return Date:
+                                </strong>
+
+                                {{ booking.return_date }}
+
+                            </p>
+
+
+                            <p>
+
+                                <strong>
+                                    Total Price:
+                                </strong>
+
+                                ₹{{ booking.total_price }}
+
+                            </p>
 
                         </div>
 
 
-                        <!-- Success Heading -->
-
-                        <h1 class="fw-bold mb-3">
-
-                            Booking Successful!
-
-                        </h1>
-
-
-                        <!-- Success Message -->
-
-                        <p class="text-muted mb-4">
-
-                            Your bike has been booked successfully.
-                            We hope you enjoy your ride!
-
-                        </p>
-
-
-                        <!-- Explore Bikes Button -->
-
                         <a
                             href="{% url 'bike_list' %}"
-                            class="btn btn-dark px-4"
+                            class="btn btn-dark px-4 mt-3"
                         >
 
                             Explore More Bikes
 
                         </a>
-
 
                     </div>
 

@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 from vehicles.models import Vehicle
 from .models import Booking
 from datetime import datetime
@@ -17,7 +18,6 @@ def create_booking(request, vehicle_id):
     if request.method == "POST":
 
         pickup_date = request.POST.get("pickup_date")
-
         return_date = request.POST.get("return_date")
 
 
@@ -35,6 +35,49 @@ def create_booking(request, vehicle_id):
         ).date()
 
 
+        # Validate dates
+
+        if return_date_object <= pickup_date_object:
+
+            messages.error(
+                request,
+                "Return date must be after pickup date."
+            )
+
+            return redirect(
+                "create_booking",
+                vehicle_id=vehicle.id
+            )
+
+
+        # Check vehicle availability
+
+        existing_booking = Booking.objects.filter(
+
+            vehicle=vehicle,
+
+            pickup_date__lt=return_date_object,
+
+            return_date__gt=pickup_date_object
+
+        ).exists()
+
+
+        # If vehicle is already booked
+
+        if existing_booking:
+
+            messages.error(
+                request,
+                "This bike is already booked for the selected dates."
+            )
+
+            return redirect(
+                "create_booking",
+                vehicle_id=vehicle.id
+            )
+
+
         # Calculate number of days
 
         total_days = (
@@ -49,9 +92,8 @@ def create_booking(request, vehicle_id):
         )
 
 
-        # Create booking
-
-        Booking.objects.create(
+                # Create booking
+        booking = Booking.objects.create(
 
             user=request.user,
 
@@ -64,6 +106,13 @@ def create_booking(request, vehicle_id):
             total_price=total_price
 
         )
+
+        return redirect(
+            "booking_success",
+            booking_id=booking.id
+        )
+
+
         return redirect("booking_success")
 
 
@@ -80,9 +129,41 @@ def create_booking(request, vehicle_id):
         context
     )
 
-def booking_success(request):
+
+@login_required
+def booking_success(request, booking_id):
+
+    booking = get_object_or_404(
+        Booking,
+        id=booking_id,
+        user=request.user
+    )
+
+    context = {
+
+        "booking": booking
+
+    }
 
     return render(
         request,
-        "bookings/booking_success.html"
+        "bookings/booking_success.html",
+        context
+    )
+
+@login_required
+def my_bookings(request):
+
+    bookings = Booking.objects.filter(
+        user=request.user
+    )
+
+    context = {
+        "bookings": bookings
+    }
+
+    return render(
+        request,
+        "bookings/my_bookings.html",
+        context
     )
