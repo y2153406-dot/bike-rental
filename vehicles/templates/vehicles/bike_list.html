@@ -40,6 +40,19 @@ Explore Bikes | BikeRental
 
                     <div class="card h-100">
 
+                        <!-- Bike Image -->
+
+                        {% if vehicle.image %}
+
+                            <img
+                                src="{{ vehicle.image.url }}"
+                                alt="{{ vehicle.brand }} {{ vehicle.name }}"
+                                class="card-img-top"
+                            >
+
+                        {% endif %}
+
+
                         <div class="card-body">
 
                             <!-- Bike Name -->
