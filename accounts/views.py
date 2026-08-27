@@ -4,6 +4,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 
 
+
 def register(request):
 
     if request.method == "POST":
@@ -74,9 +75,17 @@ def login_view(request):
                 user
             )
 
+
+            messages.success(
+                request,
+                "Login successful. Welcome back!"
+            )
+
+
             return redirect(
                 "home"
             )
+
 
         else:
 
@@ -91,10 +100,16 @@ def login_view(request):
         "accounts/login.html"
     )
 
-
 def logout_view(request):
 
-    logout(request)
+    logout(
+        request
+    )
+
+    messages.success(
+        request,
+        "You have been logged out successfully."
+    )
 
     return redirect(
         "home"
