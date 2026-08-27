@@ -1,0 +1,79 @@
+{% extends "core/base.html" %}
+
+
+{% block title %}
+Register | BikeRental
+{% endblock %}
+
+
+{% block content %}
+
+<section class="py-5">
+
+    <div class="container">
+
+        <div class="row justify-content-center">
+
+            <div class="col-lg-5 col-md-7">
+
+
+                <!-- Registration Card -->
+
+                <div class="card shadow-sm">
+
+                    <div class="card-body p-4 p-md-5">
+
+
+                        <!-- Heading -->
+
+                        <div class="text-center mb-4">
+
+                            <h1 class="fw-bold">
+                                Create Account
+                            </h1>
+
+                            <p class="text-muted">
+                                Create an account to start booking your ride.
+                            </p>
+
+                        </div>
+
+
+                        <!-- Registration Form -->
+
+                        <form method="POST">
+
+                            {% csrf_token %}
+
+
+                            <!-- Form Fields -->
+
+                            {{ form.as_p }}
+
+
+                            <!-- Submit Button -->
+
+                            <button
+                                type="submit"
+                                class="btn btn-warning w-100 mt-3"
+                            >
+                                Create Account
+                            </button>
+
+
+                        </form>
+
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

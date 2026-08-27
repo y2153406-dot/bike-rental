@@ -1,0 +1,145 @@
+{% extends "core/base.html" %}
+
+
+{% block title %}
+Login | BikeRental
+{% endblock %}
+
+
+{% block content %}
+
+<section class="py-5">
+
+    <div class="container">
+
+        <div class="row justify-content-center">
+
+            <div class="col-lg-5 col-md-7">
+
+
+                <!-- Login Card -->
+
+                <div class="card shadow-sm">
+
+                    <div class="card-body p-4 p-md-5">
+
+
+                        <!-- Heading -->
+
+                        <div class="text-center mb-4">
+
+                            <h1 class="fw-bold">
+                                Welcome Back
+                            </h1>
+
+                            <p class="text-muted">
+                                Login to continue booking your ride.
+                            </p>
+
+                        </div>
+
+
+                        <!-- Messages -->
+
+                        {% if messages %}
+
+                            {% for message in messages %}
+
+                                <div
+                                    class="alert alert-{{ message.tags }}"
+                                    role="alert"
+                                >
+
+                                    {{ message }}
+
+                                </div>
+
+                            {% endfor %}
+
+                        {% endif %}
+
+
+                        <!-- Login Form -->
+
+                        <form method="POST">
+
+                            {% csrf_token %}
+
+
+                            <!-- Username -->
+
+                            <div class="mb-3">
+
+                                <label class="form-label">
+                                    Username
+                                </label>
+
+                                <input
+                                    type="text"
+                                    name="username"
+                                    class="form-control"
+                                    required
+                                >
+
+                            </div>
+
+
+                            <!-- Password -->
+
+                            <div class="mb-3">
+
+                                <label class="form-label">
+                                    Password
+                                </label>
+
+                                <input
+                                    type="password"
+                                    name="password"
+                                    class="form-control"
+                                    required
+                                >
+
+                            </div>
+
+
+                            <!-- Login Button -->
+
+                            <button
+                                type="submit"
+                                class="btn btn-warning w-100"
+                            >
+                                Login
+                            </button>
+
+
+                        </form>
+
+
+                        <!-- Register Link -->
+
+                        <p class="text-center text-muted mt-4 mb-0">
+
+                            Don't have an account?
+
+                            <a href="{% url 'register' %}">
+
+                                Register
+
+                            </a>
+
+                        </p>
+
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

@@ -38,7 +38,21 @@ My Bookings | BikeRental
 
                 <div class="col-lg-6">
 
-                    <div class="card h-100">
+                    <div class="card h-100 shadow-sm">
+
+
+                        <!-- Bike Image -->
+
+                        {% if booking.vehicle.image %}
+
+                            <img
+                                src="{{ booking.vehicle.image.url }}"
+                                alt="{{ booking.vehicle.brand }} {{ booking.vehicle.name }}"
+                                class="card-img-top"
+                            >
+
+                        {% endif %}
+
 
                         <div class="card-body p-4">
 
