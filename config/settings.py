@@ -259,6 +259,29 @@ AUTHENTICATION_BACKENDS = [
     "allauth.account.auth_backends.AuthenticationBackend",
 
 ]
+# Google OAuth
+
+SOCIALACCOUNT_PROVIDERS = {
+
+    "google": {
+
+        "APP": {
+
+            "client_id": os.environ.get(
+                "GOOGLE_CLIENT_ID"
+            ),
+
+            "secret": os.environ.get(
+                "GOOGLE_CLIENT_SECRET"
+            ),
+
+            "key": "",
+
+        },
+
+    },
+
+}
 
 
 # CSRF
