@@ -303,3 +303,70 @@ body {
 
     color: #212529;
 }
+/* ================= WHY CHOOSE US ================= */
+
+.why-choose-section {
+    background-color: #ffffff;
+}
+
+
+.feature-card {
+    height: 100%;
+
+    padding: 35px 25px;
+
+    border: 1px solid #e9ecef;
+
+    border-radius: 16px;
+
+    background-color: #ffffff;
+
+    transition: transform 0.3s ease,
+                box-shadow 0.3s ease;
+}
+
+
+.feature-card:hover {
+    transform: translateY(-6px);
+
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+}
+
+
+.feature-icon {
+    width: 65px;
+
+    height: 65px;
+
+    margin: 0 auto 20px;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    background-color: #fff3cd;
+
+    border-radius: 15px;
+
+    font-size: 1.8rem;
+
+    font-weight: bold;
+}
+
+
+.feature-card h4 {
+    font-weight: 700;
+
+    margin-bottom: 12px;
+}
+
+
+.feature-card p {
+    margin-bottom: 0;
+
+    color: #6c757d;
+
+    line-height: 1.6;
+}
