@@ -205,3 +205,94 @@ body {
     }
 
 }
+/* ================= FEATURED BIKES ================= */
+
+.featured-bikes-section {
+    background-color: #f8f9fa;
+}
+
+
+.bike-card {
+    height: 100%;
+
+    background-color: white;
+
+    border-radius: 16px;
+
+    overflow: hidden;
+
+    border: 1px solid #eeeeee;
+
+    transition: 0.3s;
+}
+
+
+.bike-card:hover {
+    transform: translateY(-8px);
+
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.10);
+}
+
+
+.bike-image {
+    height: 230px;
+
+    background-color: #e9ecef;
+}
+
+
+.bike-image-placeholder {
+    height: 100%;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    color: #6c757d;
+
+    font-weight: 600;
+
+    font-size: 1.1rem;
+}
+
+
+.bike-card-body {
+    padding: 25px;
+}
+
+
+.bike-rating {
+    background-color: #fff3cd;
+
+    padding: 5px 10px;
+
+    border-radius: 20px;
+
+    font-size: 0.9rem;
+
+    font-weight: 600;
+}
+
+
+.bike-info {
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 15px;
+
+    color: #6c757d;
+
+    font-size: 0.9rem;
+}
+
+
+.bike-price {
+    font-size: 1.5rem;
+
+    font-weight: 700;
+
+    color: #212529;
+}
