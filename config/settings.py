@@ -9,17 +9,23 @@ import dj_database_url
 from dotenv import load_dotenv
 
 
-# Build paths inside the project
+# --------------------------------------------------
+# Build paths
+# --------------------------------------------------
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
+# --------------------------------------------------
 # Load environment variables
+# --------------------------------------------------
 
 load_dotenv(BASE_DIR / ".env")
 
 
+# --------------------------------------------------
 # Security
+# --------------------------------------------------
 
 SECRET_KEY = os.environ.get(
     "SECRET_KEY",
@@ -30,18 +36,34 @@ SECRET_KEY = os.environ.get(
 DEBUG = os.environ.get(
     "DEBUG",
     "True"
-) == "True"
+).lower() == "true"
 
 
+# Render HTTPS proxy
+
+SECURE_PROXY_SSL_HEADER = (
+    "HTTP_X_FORWARDED_PROTO",
+    "https",
+)
+
+
+# --------------------------------------------------
 # Allowed Hosts
+# --------------------------------------------------
 
-ALLOWED_HOSTS = os.environ.get(
-    "ALLOWED_HOSTS",
-    "localhost,127.0.0.1"
-).split(",")
+ALLOWED_HOSTS = [
+    host.strip()
+    for host in os.environ.get(
+        "ALLOWED_HOSTS",
+        "localhost,127.0.0.1"
+    ).split(",")
+    if host.strip()
+]
 
 
+# --------------------------------------------------
 # Application definition
+# --------------------------------------------------
 
 INSTALLED_APPS = [
 
@@ -73,15 +95,17 @@ INSTALLED_APPS = [
 ]
 
 
+# --------------------------------------------------
+# Middleware
+# --------------------------------------------------
+
 MIDDLEWARE = [
 
     "django.middleware.security.SecurityMiddleware",
 
-
     # WhiteNoise
 
     "whitenoise.middleware.WhiteNoiseMiddleware",
-
 
     "django.contrib.sessions.middleware.SessionMiddleware",
 
@@ -100,8 +124,16 @@ MIDDLEWARE = [
 ]
 
 
+# --------------------------------------------------
+# URLs
+# --------------------------------------------------
+
 ROOT_URLCONF = "config.urls"
 
+
+# --------------------------------------------------
+# Templates
+# --------------------------------------------------
 
 TEMPLATES = [
 
@@ -133,10 +165,16 @@ TEMPLATES = [
 ]
 
 
+# --------------------------------------------------
+# WSGI
+# --------------------------------------------------
+
 WSGI_APPLICATION = "config.wsgi.application"
 
 
+# --------------------------------------------------
 # Database
+# --------------------------------------------------
 
 DATABASES = {
 
@@ -151,7 +189,9 @@ DATABASES = {
 }
 
 
+# --------------------------------------------------
 # Password validation
+# --------------------------------------------------
 
 AUTH_PASSWORD_VALIDATORS = [
 
@@ -186,7 +226,9 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
+# --------------------------------------------------
 # Internationalization
+# --------------------------------------------------
 
 LANGUAGE_CODE = "en-us"
 
@@ -200,7 +242,9 @@ USE_I18N = True
 USE_TZ = True
 
 
+# --------------------------------------------------
 # Static Files
+# --------------------------------------------------
 
 STATIC_URL = "/static/"
 
@@ -217,7 +261,6 @@ STORAGES = {
 
     },
 
-
     "staticfiles": {
 
         "BACKEND":
@@ -227,7 +270,10 @@ STORAGES = {
 
 }
 
+
+# --------------------------------------------------
 # Media Files
+# --------------------------------------------------
 
 MEDIA_URL = "/media/"
 
@@ -235,7 +281,9 @@ MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
 
 
+# --------------------------------------------------
 # Authentication
+# --------------------------------------------------
 
 SITE_ID = 1
 
@@ -259,7 +307,14 @@ AUTHENTICATION_BACKENDS = [
     "allauth.account.auth_backends.AuthenticationBackend",
 
 ]
+
+
+# --------------------------------------------------
 # Google OAuth
+# --------------------------------------------------
+
+ACCOUNT_DEFAULT_HTTP_PROTOCOL = "https"
+
 
 SOCIALACCOUNT_PROVIDERS = {
 
@@ -284,19 +339,23 @@ SOCIALACCOUNT_PROVIDERS = {
 }
 
 
+# --------------------------------------------------
 # CSRF
+# --------------------------------------------------
 
 CSRF_TRUSTED_ORIGINS = [
-    origin
+    origin.strip()
     for origin in os.environ.get(
         "CSRF_TRUSTED_ORIGINS",
         ""
     ).split(",")
-    if origin
+    if origin.strip()
 ]
 
 
+# --------------------------------------------------
 # Razorpay
+# --------------------------------------------------
 
 RAZORPAY_KEY_ID = os.environ.get(
     "RAZORPAY_KEY_ID"
