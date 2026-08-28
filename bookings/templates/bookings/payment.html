@@ -143,11 +143,66 @@ Payment | BikeRental
         "order_id": "{{ booking.razorpay_order_id }}",
 
 
+        /*
+        ----------------------------------
+        Payment Method Configuration
+        ----------------------------------
+        */
+
+        "config": {
+
+            "display": {
+
+                "blocks": {
+
+                    "upi": {
+
+                        "name": "Pay via UPI",
+
+                        "instruments": [
+
+                            {
+                                "method": "upi"
+                            }
+
+                        ]
+
+                    }
+
+                },
+
+
+                "sequence": [
+
+                    "block.upi"
+
+                ],
+
+
+                "preferences": {
+
+                    "show_default_blocks": true
+
+                }
+
+            }
+
+        },
+
+
+        /*
+        ----------------------------------
+        Payment Success Handler
+        ----------------------------------
+        */
+
         "handler": function (response) {
 
 
             fetch(
+
                 "{% url 'verify_payment' %}",
+
                 {
 
                     method: "POST",
